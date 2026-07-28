@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Slice of Joy brand mark">
+  <defs>
+    <linearGradient id="brand-bg" x1="10" y1="8" x2="54" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ff1493" />
+      <stop offset="0.58" stop-color="#ff4db2" />
+      <stop offset="1" stop-color="#00cfff" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="18" fill="url(#brand-bg)" />
+  <path d="M18 44c0-7.7 5.6-13 14-13s14 5.3 14 13H18Z" fill="#ffffff" />
+  <path d="M32 31 25.5 44h13L32 31Z" fill="#fff4a8" />
+  <path d="M28 44h8c-.6-3.5-2.1-6.8-4-9.8-1.9 3-3.4 6.3-4 9.8Z" fill="#ffffff" />
+  <circle cx="25.5" cy="39" r="1.7" fill="#00cfff" />
+  <circle cx="32" cy="36.5" r="1.5" fill="#ff1493" />
+  <circle cx="38" cy="40" r="1.7" fill="#ffd400" />
+</svg>

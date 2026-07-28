@@ -1,0 +1,542 @@
+<!DOCTYPE html><html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Project Slice of Joy | Spreading Birthday Magic</title>
+<link href="favicon.svg" rel="icon" type="image/svg+xml">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-variant": "#d9f7ff",
+                    "on-primary-fixed-variant": "#7a0048",
+                    "surface-container-low": "#f7fbff",
+                    "inverse-surface": "#2f3131",
+                    "surface-dim": "#eaf2f7",
+                    "tertiary-container": "#ffd200",
+                    "surface-container-lowest": "#ffffff",
+                    "primary": "#ff1493",
+                    "primary-fixed-dim": "#ff9ad5",
+                    "on-surface-variant": "#3c4b63",
+                    "on-secondary-fixed": "#002022",
+                    "secondary-fixed-dim": "#33e7ff",
+                    "primary-container": "#ff4db2",
+                    "surface-bright": "#f9f9f9",
+                    "on-secondary-container": "#003a52",
+                    "secondary-fixed": "#b6f7ff",
+                    "on-primary-fixed": "#33001f",
+                    "surface-tint": "#ff1493",
+                    "secondary": "#00cfff",
+                    "primary-fixed": "#ffd6ef",
+                    "on-secondary-fixed-variant": "#004b69",
+                    "on-tertiary": "#2b2400",
+                    "on-primary": "#ffffff",
+                    "secondary-container": "#c8f8ff",
+                    "tertiary": "#ffd400",
+                    "inverse-primary": "#ff9ad5",
+                    "surface": "#fffdf8",
+                    "on-tertiary-fixed-variant": "#5f5000",
+                    "surface-container-highest": "#ddeef7",
+                    "surface-container-high": "#edf7fb",
+                    "surface-container": "#f3fafe",
+                    "on-secondary": "#042638",
+                    "on-error": "#ffffff",
+                    "on-primary-container": "#fffbff",
+                    "inverse-on-surface": "#f0f1f1",
+                    "on-surface": "#102033",
+                    "outline": "#8fa7ba",
+                    "on-tertiary-container": "#4c4100",
+                    "tertiary-fixed": "#fff28a",
+                    "on-tertiary-fixed": "#221b00",
+                    "on-background": "#102033",
+                    "background": "#fffdf8",
+                    "error-container": "#ffdad6",
+                    "tertiary-fixed-dim": "#ffd400",
+                    "outline-variant": "#cfe0ec",
+                    "error": "#ba1a1a",
+                    "on-error-container": "#93000a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "xs": "4px",
+                    "sm": "12px",
+                    "md": "24px",
+                    "xl": "80px",
+                    "base": "8px",
+                    "lg": "48px",
+                    "container-max": "1200px"
+            },
+            "fontFamily": {
+                    "label-bold": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Montserrat"],
+                    "headline-sm": ["Montserrat"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "display-lg": ["Montserrat"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "display-lg-mobile": ["Montserrat"]
+            },
+            "fontSize": {
+                    "label-bold": ["14px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                    "headline-sm": ["24px", {"lineHeight": "1.4", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "display-lg-mobile": ["36px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "800"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .joy-gradient {
+            background: linear-gradient(135deg, #ff1493 0%, #00cfff 100%);
+        }
+        
+        .joy-gradient-hover:hover {
+            background: linear-gradient(135deg, #ff4db2 0%, #00e0ff 55%, #ffd400 100%);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 207, 255, 0.18);
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ffd400;
+            top: -20px;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        .animate-fall {
+            animation: fall 3s linear infinite;
+        }
+
+        .active-accordion {
+            background: linear-gradient(90deg, rgba(255, 20, 147, 0.08) 0%, rgba(0, 207, 255, 0.08) 100%) !important;
+        }
+
+        .btn-squish:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+<!-- Confetti Container -->
+<div class="fixed inset-0 pointer-events-none z-0" id="confetti-bg"></div>
+<!-- Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-white/70 dark:bg-inverse-surface/70 backdrop-blur-md shadow-[0_4px_20px_rgba(0,207,255,0.14)]">
+<div class="flex justify-between items-center px-gutter py-sm max-w-container-max mx-auto">
+<div class="flex items-center gap-sm">
+<img alt="Project Slice of Joy Logo" class="h-12 w-12 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWylaHfN6Ro_zfT1I5UrCHnYZie3kvqtw7nQxxWcl3dUIxnWW-npumuzmj2Eidey5NYEm-hEZQ7tf-1cHb517Y5A68sOlKU95WpdvPQ33ai8voPAgLdZtKKext-IcbG8aPKJpbSvAq27YFRxGXKsYbTe7F6RDTDNMZDjmrZiqXFtzg39VgmkNRmd1iKEpXMt51wcXocCGdDRZf-qASxoEwaT_oqwoiBudnd8GAP4g61DpH3yzs5jh3MNGxTPDVsWM7Rc536shltrU">
+<span class="font-display-lg text-headline-sm text-primary dark:text-inverse-primary tracking-tighter">Project Slice of Joy</span>
+</div>
+<div class="hidden md:flex gap-md items-center">
+<a class="text-on-surface dark:text-on-surface-variant font-medium hover:text-primary hover:scale-105 transition-transform" href="#about">About</a>
+<a class="text-on-surface dark:text-on-surface-variant font-medium hover:text-primary hover:scale-105 transition-transform" href="#kits">Kit Contents</a>
+<a class="text-on-surface dark:text-on-surface-variant font-medium hover:text-primary hover:scale-105 transition-transform" href="#pantries">Pantries</a>
+<a class="text-on-surface dark:text-on-surface-variant font-medium hover:text-primary hover:scale-105 transition-transform" href="#team">Team</a>
+<a class="text-on-surface dark:text-on-surface-variant font-medium hover:text-primary hover:scale-105 transition-transform" href="#faq">FAQ</a>
+<a class="bg-primary text-on-primary px-md py-xs rounded-full font-label-bold joy-gradient joy-gradient-hover shadow-lg btn-squish transition-all" href="#donate">Donate</a>
+</div>
+<button class="md:hidden text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</nav>
+<!-- Hero Section -->
+<section class="relative pt-[120px] pb-xl px-gutter overflow-hidden">
+<div class="max-w-container-max mx-auto grid grid-cols-1 gap-lg items-center relative z-10">
+<div class="space-y-md text-center">
+<div class="inline-block px-sm py-xs bg-primary-fixed text-on-primary-fixed rounded-full font-label-bold text-xs uppercase tracking-widest mb-sm">
+                    Student-Led Community Impact
+                </div>
+<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary leading-tight">
+                    Spread the <br><span class="text-secondary">Birthday Magic!</span>
+</h1><div class="inline-flex items-center gap-xs bg-white/80 backdrop-blur-sm border border-secondary/20 px-sm py-xs rounded-lg shadow-sm mt-sm animate-bounce"><span class="material-symbols-outlined text-secondary text-sm">cake</span><span class="text-xs font-label-bold text-on-surface-variant uppercase tracking-wider">Birthday Cake Kits For Local Pantries</span></div>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-lg mx-auto">
+                    High schoolers delivering full birthday cake kits to local food pantries. Because every child deserves a celebration, regardless of their circumstances.
+                </p>
+<div class="flex flex-col sm:flex-row gap-sm pt-md justify-center">
+<button class="bg-primary text-on-primary px-lg py-md rounded-full font-label-bold joy-gradient joy-gradient-hover shadow-[0_8px_25px_rgba(255,20,147,0.28)] btn-squish transition-all text-center" id="main-donate-btn">
+                        Donate Funds ($10 = 1 Kit)
+                    </button>
+<a class="border-2 border-secondary text-secondary px-lg py-md rounded-full font-label-bold hover:bg-secondary/5 btn-squish transition-all text-center" href="#kits">
+                        See What's Inside
+                    </a>
+</div>
+</div>
+</div>
+</section>
+<!-- Mission Section -->
+<section class="py-xl bg-surface-container-low px-gutter" id="about">
+<div class="max-w-container-max mx-auto text-center">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-lg">Bridging the Gap for Morris County Families</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+<div class="glass-card p-md rounded-xl text-left border-l-4 border-primary shadow-sm hover:-translate-y-2 transition-transform">
+<span class="material-symbols-outlined text-primary text-4xl mb-sm" style="font-variation-settings: 'FILL' 1;">cake</span>
+<h3 class="font-headline-sm text-headline-sm mb-sm text-on-surface">The Need</h3>
+<p class="text-on-surface-variant">Families in Morris County often struggle to afford the "extras." For a child, a birthday cake isn't an extra—it's a core memory.</p>
+</div>
+<div class="glass-card p-md rounded-xl text-left border-l-4 border-secondary shadow-sm hover:-translate-y-2 transition-transform">
+<span class="material-symbols-outlined text-secondary text-4xl mb-sm" style="font-variation-settings: 'FILL' 1;">groups</span>
+<h3 class="font-headline-sm text-headline-sm mb-sm text-on-surface">The Squad</h3>
+<p class="text-on-surface-variant">We're a group of dedicated high schoolers passionate about community and the power of a simple, joyful gesture.</p>
+</div>
+<div class="glass-card p-md rounded-xl text-left border-l-4 border-tertiary-container shadow-sm hover:-translate-y-2 transition-transform">
+<span class="material-symbols-outlined text-tertiary-container text-4xl mb-sm" style="font-variation-settings: 'FILL' 1;">volunteer_activism</span>
+<h3 class="font-headline-sm text-headline-sm mb-sm text-on-surface">The Goal</h3>
+<p class="text-on-surface-variant">To ensure no pantry client has to choose between a meal and a birthday celebration for their child.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- What's in a Kit -->
+<section class="py-xl px-gutter" id="kits">
+<div class="max-w-container-max mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-end mb-lg gap-md">
+<div class="max-w-xl">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-sm">What's In A Kit?</h2>
+<p class="text-body-lg text-on-surface-variant">Every "Slice of Joy" kit is curated to include everything needed for a perfect party at home.</p>
+</div>
+<div class="bg-secondary-container text-on-secondary-container px-md py-sm rounded-xl font-label-bold flex items-center gap-xs">
+<span class="material-symbols-outlined">info</span> Just $10 per kit
+                </div>
+</div>
+<div class="grid grid-cols-2 lg:grid-cols-3 gap-md">
+<!-- Kit Item 1 -->
+<div class="group relative bg-white border border-outline-variant/30 rounded-2xl p-md hover:shadow-xl hover:border-primary/20 transition-all duration-300">
+<div class="aspect-square bg-primary-fixed/30 rounded-xl mb-md flex items-center justify-center overflow-hidden">
+<img class="w-2/3 h-2/3 object-contain group-hover:scale-110 transition-transform" data-alt="A brightly colored box of vanilla and chocolate cake mix on a clean white surface with celebratory sprinkles scattered around. Vibrant studio lighting with soft pink shadows, 4k resolution." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHdtsms_0fwgqQVLGIHpjR-r8-yzTCJDx2k1mBzjZtndEmb4Yf_CciAVVikTGnyu_Q84pgh1jfMirQf--xAz6x594GI9FequbiRTm1FIdIYH4GwVlromRdbxsLRnkjvQ48uNIDJtCjKw2IY9e4id0XPtEZ2vgZFS8d-vw-L_sdI1dM2ekL3Ku-I90YzJkw_WR4pgeRKbTxquSu0-MoMChM8nwC96w04RJWfJmWL06VmzDmUwNCoJos9neyrYyAKk4GhDzQFDaSNU8">
+</div>
+<h4 class="font-headline-sm text-headline-sm text-primary mb-xs">Boxed Cake Mix</h4>
+<p class="text-sm text-on-surface-variant">Premium vanilla or chocolate base for the perfect cake.</p>
+</div>
+<!-- Kit Item 2 -->
+<div class="group relative bg-white border border-outline-variant/30 rounded-2xl p-md hover:shadow-xl hover:border-secondary/20 transition-all duration-300">
+<div class="aspect-square bg-secondary-fixed/30 rounded-xl mb-md flex items-center justify-center overflow-hidden">
+<img class="w-2/3 h-2/3 object-contain group-hover:scale-110 transition-transform" data-alt="A bottle of vegetable oil and a carton of eggs in a minimalist, modern kitchen setting. Bright high-key lighting with teal accents. Professional product photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-_zGyJbjtouafLFgPM8Sd6YOZ7UhsJF5ITtZq4L3A5rE83ZJMnaW--_x_3j5mQjVAxl52YyPELq6LBuFncM7QDaYiaEDh66b6SZaB1X72O4ywKS_9C4OCqMTUu7WeShSf7_ek92BoB708nyyDqxxkj3S00zO6GG0deSHCm75nNl5Bu5c2hkVNSjFQokZZvrkAEvbV8bnxnY0d_cYurJA40laj6IwZrULQdJRXdEK6JnA4CqjHEuJJKg73SOhZWr5k2lXUX6GOWHk">
+</div>
+<h4 class="font-headline-sm text-headline-sm text-secondary mb-xs">Essential Ingredients</h4>
+<p class="text-sm text-on-surface-variant">Vegetable oil and shelf-stable substitutes for fresh additions.</p>
+</div>
+<!-- Kit Item 3 -->
+<div class="group relative bg-white border border-outline-variant/30 rounded-2xl p-md hover:shadow-xl hover:border-tertiary/20 transition-all duration-300">
+<div class="aspect-square bg-tertiary-fixed/30 rounded-xl mb-md flex items-center justify-center overflow-hidden">
+<img class="w-2/3 h-2/3 object-contain group-hover:scale-110 transition-transform" data-alt="A tub of creamy white vanilla frosting with a swirl on top. Small colorful dots of confetti around the tub. Warm yellow lighting, joyful and appetizing aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuADHXJmnA1plGs8GQzMzsnC9QEn_KxL5eWwSaD1jc4SUkzveR1xxscENTflr-0SBMb3hA5QuOdJ6uGgoE9vsGNxgIPPS4NS9IAopp4NNnVdqoCIGlNd2SwhzkmCDg7SSNohcBjMfpMGER7h7DK7-YMd6m89t1KgiNh-DLpH642bz1ft8rg5IoLRtUqhhhrMdXxw_YUDzlFyKg1GR_63LeAPZ6duEtJxYu5R8YsgBzzyLG1sG1giH6O5jmCzZMNCVl-WVHPvBX8mu5A">
+</div>
+<h4 class="font-headline-sm text-headline-sm text-tertiary mb-xs">Creamy Frosting</h4>
+<p class="text-sm text-on-surface-variant">Sweet, rich frosting to top off the birthday creation.</p>
+</div>
+<!-- Kit Item 4 -->
+<div class="group relative bg-white border border-outline-variant/30 rounded-2xl p-md hover:shadow-xl hover:border-primary/20 transition-all duration-300">
+<div class="aspect-square bg-primary-fixed/30 rounded-xl mb-md flex items-center justify-center overflow-hidden">
+<img class="w-2/3 h-2/3 object-contain group-hover:scale-110 transition-transform" data-alt="A jar of multi-colored rainbow sprinkles being poured, frozen in motion. High speed photography, vibrant neon colors against a clean background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxqi85GL3YlaLibmvkd4B4YMCRPjhPQ8NkHbBGyb2Am27Eig65TD65UJ6ScRJz0onLe5LNiODG9MtsiI1JvBQKIfLvzQkm79kFJAAlfZ_TXYPfYS03Kzegc7tbc1ufch16l2IJvbd0Vdi_DtV7Pv2zQOBz1tO_LhhiLP2bkvea-2vXyUY6gVMR3o2Bkbg6FQ9Hic_Sl7ttAkx8TKhBmk3Avl6EVg5t7PkfL7IRhkApisu7QQAtIfPHoNJVcU_uNz_PzNv5eSTkfuY">
+</div>
+<h4 class="font-headline-sm text-headline-sm text-primary mb-xs">Rainbow Sprinkles</h4>
+<p class="text-sm text-on-surface-variant">Because you can't have a birthday cake without a crunch.</p>
+</div>
+<!-- Kit Item 5 -->
+<div class="group relative bg-white border border-outline-variant/30 rounded-2xl p-md hover:shadow-xl hover:border-secondary/20 transition-all duration-300">
+<div class="aspect-square bg-secondary-fixed/30 rounded-xl mb-md flex items-center justify-center overflow-hidden">
+<img class="w-2/3 h-2/3 object-contain group-hover:scale-110 transition-transform" data-alt="A colorful, hand-drawn birthday card with 'Happy Birthday' in calligraphy. Surrounded by markers and artistic supplies. Bright, friendly, and personal feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxqKL02TF8iMNEPFm6TFd1fr-zEPNRtNxhyP1MkzUEFA7nCKXDzJuAchEalbCiubavEhSwY5-GOQXjLiPAH8jH-Zc0CM5b1vVuTpqlFV1rNaVQu3NWhxCWnXc-KjaGBPfTnb9YC6tVbxiMo40WvAZEY4LewUjpfPXViZhnHHaCVP0oT9Kk_eHPQzavh9n1ljh5k4t5XVdKK2j16nyvV3PHfbK0ebv3NDj6mdqZ_4bOtK-OgmaNrGSSP-YdfM4K02ZLli0vWc6GlXg">
+</div>
+<h4 class="font-headline-sm text-headline-sm text-secondary mb-xs">Handwritten Card</h4>
+<p class="text-sm text-on-surface-variant">A personal touch from our student volunteers to the birthday star.</p>
+</div>
+<!-- Kit Item 6 -->
+<div class="group relative bg-white border border-outline-variant/30 rounded-2xl p-md hover:shadow-xl hover:border-tertiary/20 transition-all duration-300">
+<div class="aspect-square bg-tertiary-fixed/30 rounded-xl mb-md flex items-center justify-center overflow-hidden">
+<img class="w-2/3 h-2/3 object-contain group-hover:scale-110 transition-transform" data-alt="A festive assortment of party supplies including colorful balloons, paper plates, and party hats. Vibrant celebratory atmosphere with dynamic lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA46D5U7PTHb0OvziWF1dP-cUIjDagTFWyGcMGyFNJnlyL2bztl65JIc01gABTmSC3rOEpy7N2bxhQZetQXCB7-6CKbTQUqvrDQ5Z2-q2P-lR-QGvKNIqltHUJJ-75Z35d9bjvpJpFsZpALBSHYLBolDscEVEJihBGqBz1S_Vkm3w6S5MBypYZ4aCnKPfKJ2ELSDKj6cxURIYOOGM7GV9tjWPdGE8hqjyPIZjEioTbfQYvnf6Jt8s0WUPoY60kGIHj8Cz7brrVRmKg">
+</div>
+<h4 class="font-headline-sm text-headline-sm text-tertiary mb-xs">Festive Supplies</h4>
+<p class="text-sm text-on-surface-variant">Candles, plates, and balloons to set the party mood.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Impact & Donation Tiers -->
+<section class="py-xl joy-gradient text-on-primary px-gutter overflow-hidden relative" id="donate">
+<div class="max-w-container-max mx-auto relative z-10 text-center">
+<h2 class="font-display-lg text-display-lg-mobile md:text-display-lg mb-sm">Fuel the Celebration</h2>
+<p class="font-body-lg text-body-lg mb-lg opacity-90 max-w-2xl mx-auto">Support birthday cake kits for local families. Exact impact numbers and campaign goals will be added here once they are confirmed.</p>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md max-w-4xl mx-auto">
+<div class="bg-surface-container-lowest p-lg rounded-2xl text-on-surface shadow-xl flex flex-col items-center">
+<h3 class="text-headline-sm font-headline-sm text-primary mb-xs">$10</h3>
+<p class="text-on-surface-variant mb-md">Sponsor 1 Birthday Kit</p>
+<button class="mt-auto w-full py-sm bg-primary text-on-primary rounded-full font-label-bold btn-squish">Sponsor 1</button>
+</div>
+<div class="bg-surface-container-lowest p-lg rounded-2xl text-on-surface shadow-xl flex flex-col items-center relative scale-105 border-2 border-secondary">
+<div class="absolute -top-4 bg-secondary text-on-secondary px-sm py-1 rounded-full text-xs font-label-bold">MOST POPULAR</div>
+<h3 class="text-headline-sm font-headline-sm text-secondary mb-xs">$20</h3>
+<p class="text-on-surface-variant mb-md">Sponsor 2 Birthday Kits</p>
+<button class="mt-auto w-full py-sm bg-secondary text-on-secondary rounded-full font-label-bold btn-squish">Sponsor 2</button>
+</div>
+<div class="bg-surface-container-lowest p-lg rounded-2xl text-on-surface shadow-xl flex flex-col items-center">
+<h3 class="text-headline-sm font-headline-sm text-tertiary mb-xs">$50</h3>
+<p class="text-on-surface-variant mb-md">Sponsor 5 Birthday Kits</p>
+<button class="mt-auto w-full py-sm bg-tertiary text-on-tertiary rounded-full font-label-bold btn-squish">Sponsor 5</button>
+</div>
+</div>
+<div class="mt-lg">
+<a class="bg-secondary-container text-on-secondary-container px-lg py-md rounded-full font-label-bold btn-squish inline-flex items-center gap-sm mx-auto shadow-lg hover:shadow-secondary/20 transition-all" href="https://www.amazon.com/hz/wishlist/ls/PAFYUBBGUTYQ?ref=wlshare" rel="noreferrer" target="_blank">
+<span class="material-symbols-outlined">shopping_cart</span> Shop Our Amazon Wishlist
+                </a>
+</div>
+</div>
+</section>
+<!-- Partners Section -->
+<section class="py-xl px-gutter bg-white" id="pantries">
+<div class="max-w-container-max mx-auto text-center">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-lg">Our Morris County Partners</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-lg">
+<div class="flex flex-col items-center gap-sm group">
+<div class="w-24 h-24 rounded-full bg-surface-variant flex items-center justify-center grayscale group-hover:grayscale-0 transition-all border-2 border-dashed border-primary/20">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant">hevc</span>
+</div>
+<p class="font-label-bold text-on-surface-variant">Interfaith Food Pantry</p>
+</div>
+<div class="flex flex-col items-center gap-sm group">
+<div class="w-24 h-24 rounded-full bg-surface-variant flex items-center justify-center grayscale group-hover:grayscale-0 transition-all border-2 border-dashed border-primary/20">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant">lunch_dining</span>
+</div>
+<p class="font-label-bold text-on-surface-variant">Table of Hope</p>
+</div>
+<div class="flex flex-col items-center gap-sm group">
+<div class="w-24 h-24 rounded-full bg-surface-variant flex items-center justify-center grayscale group-hover:grayscale-0 transition-all border-2 border-dashed border-primary/20">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant">local_library</span>
+</div>
+<p class="font-label-bold text-on-surface-variant">Market Street Mission</p>
+</div>
+<div class="flex flex-col items-center gap-sm group">
+<div class="w-24 h-24 rounded-full bg-surface-variant flex items-center justify-center grayscale group-hover:grayscale-0 transition-all border-2 border-dashed border-primary/20">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant">handshake</span>
+</div>
+<p class="font-label-bold text-on-surface-variant">Community Hub</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Team Section -->
+<section class="py-xl bg-surface-container-low px-gutter" id="team">
+<div class="max-w-container-max mx-auto">
+<h2 class="font-headline-lg text-headline-lg text-primary text-center mb-lg">The Slice of Joy Squad</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+<!-- Team Member 1 -->
+<div class="bg-white p-md rounded-2xl shadow-sm border-b-4 border-primary text-center">
+<div class="w-24 h-24 bg-primary-fixed mx-auto rounded-full mb-md flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-primary">face</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm">Alex Chen</h3>
+<p class="text-primary font-label-bold mb-sm">Founder &amp; Logistics</p>
+<p class="text-sm text-on-surface-variant italic">"I believe cake is a universal language of love."</p>
+</div>
+<!-- Team Member 2 -->
+<div class="bg-white p-md rounded-2xl shadow-sm border-b-4 border-secondary text-center">
+<div class="w-24 h-24 bg-secondary-fixed mx-auto rounded-full mb-md flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-secondary">face_6</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm">Maya Rodriguez</h3>
+<p class="text-secondary font-label-bold mb-sm">Outreach Director</p>
+<p class="text-sm text-on-surface-variant italic">"Connecting our community through shared celebrations."</p>
+</div>
+<!-- Team Member 3 -->
+<div class="bg-white p-md rounded-2xl shadow-sm border-b-4 border-tertiary mx-auto text-center w-full">
+<div class="w-24 h-24 bg-tertiary-fixed mx-auto rounded-full mb-md flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-tertiary">face_5</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm">Sam Wilson</h3>
+<p class="text-tertiary font-label-bold mb-sm">Head of Assembly</p>
+<p class="text-sm text-on-surface-variant italic">"Master of the perfect sprinkle-to-cake ratio!"</p>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQ Section -->
+<section class="py-xl px-gutter bg-white" id="faq">
+<div class="max-w-2xl mx-auto">
+<h2 class="font-headline-lg text-headline-lg text-on-surface text-center mb-lg">Common Questions</h2>
+<div class="space-y-sm">
+<!-- FAQ 1 -->
+<div class="faq-item border-b-2 border-primary/20">
+<button class="faq-trigger w-full flex justify-between items-center py-md text-left font-headline-sm text-headline-sm text-on-surface hover:text-primary transition-colors">
+                        Where do the kits go?
+                        <span class="material-symbols-outlined">expand_more</span>
+</button>
+<div class="faq-content hidden pb-md text-on-surface-variant">
+                        Our kits are distributed through partner food pantries in Morris County, NJ, including the Interfaith Food Pantry and Table of Hope. We drop off batches monthly based on the pantries' needs.
+                    </div>
+</div>
+<!-- FAQ 2 -->
+<div class="faq-item border-b-2 border-primary/20">
+<button class="faq-trigger w-full flex justify-between items-center py-md text-left font-headline-sm text-headline-sm text-on-surface hover:text-primary transition-colors">
+                        What's exactly inside?
+                        <span class="material-symbols-outlined">expand_more</span>
+</button>
+<div class="faq-content hidden pb-md text-on-surface-variant">
+                        Every kit contains boxed cake mix, frosting, oil/egg substitute, candles, plates, napkins, balloons, and a handwritten card. We ensure everything is shelf-stable for pantry storage.
+                    </div>
+</div>
+<!-- FAQ 3 -->
+<div class="faq-item border-b-2 border-primary/20">
+<button class="faq-trigger w-full flex justify-between items-center py-md text-left font-headline-sm text-headline-sm text-on-surface hover:text-primary transition-colors">
+                        How to run a drive?
+                        <span class="material-symbols-outlined">expand_more</span>
+</button>
+<div class="faq-content hidden pb-md text-on-surface-variant">
+                        We have a digital toolkit ready for schools, clubs, or offices! It includes supply lists and signage. Contact Alex via our team section to get started.
+                    </div>
+</div>
+<!-- FAQ 4 -->
+<div class="faq-item border-b-2 border-primary/20">
+<button class="faq-trigger w-full flex justify-between items-center py-md text-left font-headline-sm text-headline-sm text-on-surface hover:text-primary transition-colors">
+                        How to get involved?
+                        <span class="material-symbols-outlined">expand_more</span>
+</button>
+<div class="faq-content hidden pb-md text-on-surface-variant">
+                        You can donate funds, shop our Amazon wishlist, or volunteer at one of our assembly events. Follow our social media for assembly dates!
+                    </div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-inverse-surface py-lg border-t-2 border-primary/10 px-gutter">
+<div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-md text-center md:text-left">
+<div class="md:col-span-2">
+<div class="flex items-center gap-sm justify-center md:justify-start mb-sm">
+<img alt="Project Slice of Joy Logo" class="h-10 w-10 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWylaHfN6Ro_zfT1I5UrCHnYZie3kvqtw7nQxxWcl3dUIxnWW-npumuzmj2Eidey5NYEm-hEZQ7tf-1cHb517Y5A68sOlKU95WpdvPQ33ai8voPAgLdZtKKext-IcbG8aPKJpbSvAq27YFRxGXKsYbTe7F6RDTDNMZDjmrZiqXFtzg39VgmkNRmd1iKEpXMt51wcXocCGdDRZf-qASxoEwaT_oqwoiBudnd8GAP4g61DpH3yzs5jh3MNGxTPDVsWM7Rc536shltrU">
+<span class="font-headline-sm text-headline-sm text-primary">Project Slice of Joy</span>
+</div>
+<p class="text-body-md text-on-surface-variant max-w-sm mb-md">Celebrating community in Morris County. A student-led non-profit initiative making birthdays brighter one kit at a time.</p>
+<p class="text-label-bold text-on-surface-variant opacity-75">© 2024 Project Slice of Joy.</p>
+</div>
+<div class="space-y-sm">
+<h4 class="font-label-bold text-on-surface uppercase tracking-widest text-xs">Navigation</h4>
+<ul class="space-y-xs text-on-surface-variant">
+<li class=""><a class="hover:text-primary hover:underline transition-all" href="#about">About Our Mission</a></li>
+<li class=""><a class="hover:text-primary hover:underline transition-all" href="#kits">Kit Essentials</a></li>
+<li class=""><a class="hover:text-primary hover:underline transition-all" href="#team">Meet the Team</a></li>
+<li class=""><a class="hover:text-primary hover:underline transition-all" href="#faq">Common Questions</a></li>
+</ul>
+</div>
+<div class="space-y-sm">
+<h4 class="font-label-bold text-on-surface uppercase tracking-widest text-xs">Get Involved</h4>
+<ul class="space-y-xs text-on-surface-variant">
+<li class=""><a class="hover:text-primary hover:underline transition-all text-primary font-bold" href="#donate">Donate Funds</a></li>
+<li class=""><a class="hover:text-primary hover:underline transition-all" href="https://www.amazon.com/hz/wishlist/ls/PAFYUBBGUTYQ?ref=wlshare" rel="noreferrer" target="_blank">Amazon Wishlist</a></li>
+<li class=""><a class="hover:text-primary hover:underline transition-all" href="#">Instagram</a></li>
+<li class=""><a class="hover:text-primary hover:underline transition-all" href="mailto:hello@sliceofjoy.org">Email Us</a></li>
+</ul>
+</div>
+</div>
+</footer>
+<script>
+        // Interactive Elements: Background Confetti
+        function createConfetti() {
+            const container = document.getElementById('confetti-bg');
+            if (!container) return;
+            const colors = ['#ff1493', '#00cfff', '#ffd400', '#00e0ff', '#fff28a'];
+            const confetti = document.createElement('div');
+            const size = Math.random() * 8 + 4;
+            
+            confetti.classList.add('confetti-piece');
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.width = size + 'px';
+            confetti.style.height = size + 'px';
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+            confetti.style.opacity = Math.random() * 0.5 + 0.2;
+            confetti.style.animation = `fall ${Math.random() * 10 + 5}s linear forwards`;
+            
+            container.appendChild(confetti);
+            
+            setTimeout(() => {
+                confetti.remove();
+            }, 15000);
+        }
+
+        setInterval(createConfetti, 500);
+
+        // Confetti Burst on CTA
+        const donateBtn = document.getElementById('main-donate-btn');
+        if (donateBtn) {
+            donateBtn.addEventListener('click', () => {
+                for(let i=0; i<30; i++) {
+                    setTimeout(createConfetti, i * 20);
+                }
+                alert("Thank you for your interest! In a real scenario, this would redirect to a donation portal.");
+            });
+        }
+
+        // FAQ Accordion Logic
+        const triggers = document.querySelectorAll('.faq-trigger');
+        triggers.forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                const parent = trigger.parentElement;
+                const content = trigger.nextElementSibling;
+                const icon = trigger.querySelector('.material-symbols-outlined');
+                
+                // Toggle active classes
+                const isOpen = !content.classList.contains('hidden');
+                
+                // Close all others
+                document.querySelectorAll('.faq-content').forEach(c => c.classList.add('hidden'));
+                document.querySelectorAll('.faq-trigger').forEach(t => t.parentElement.classList.remove('active-accordion'));
+                document.querySelectorAll('.faq-trigger .material-symbols-outlined').forEach(i => i.style.transform = 'rotate(0deg)');
+
+                if (!isOpen) {
+                    content.classList.remove('hidden');
+                    parent.classList.add('active-accordion');
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('href');
+                if (targetId.startsWith('#') && targetId.length > 1) {
+                    e.preventDefault();
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+
+
+
+
+</body></html>
