@@ -146,6 +146,16 @@
         .btn-squish:active {
             transform: scale(0.95);
         }
+
+        .team-scroll {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            scroll-behavior: smooth;
+        }
+
+        .team-scroll::-webkit-scrollbar {
+            display: none;
+        }
     </style>
 </head>
 <body class="bg-background text-on-surface font-body-md overflow-x-hidden">
@@ -358,44 +368,45 @@
 <section class="py-xl bg-surface-container-low px-gutter" id="team">
 <div class="max-w-container-max mx-auto">
 <h2 class="font-headline-lg text-headline-lg text-primary text-center mb-lg">The Slice of Joy Squad</h2>
-<div class="flex gap-md overflow-x-auto pb-sm snap-x snap-mandatory" style="scrollbar-width: thin;">
-<div class="bg-white p-md rounded-2xl shadow-sm border-b-4 border-primary text-center min-w-[260px] sm:min-w-[280px] snap-start shrink-0">
+<p class="text-center text-sm text-on-surface-variant mb-md">Auto-scrolling. Hover, swipe, or drag to explore the full team.</p>
+<div class="team-scroll flex gap-md overflow-x-auto pb-sm" id="team-scroll">
+<div class="bg-white p-md rounded-2xl shadow-sm border-b-4 border-primary text-center min-w-[260px] sm:min-w-[280px] shrink-0">
 <div class="w-24 h-24 bg-primary-fixed mx-auto rounded-full mb-md flex items-center justify-center">
 <span class="material-symbols-outlined text-4xl text-primary">face</span>
 </div>
 <h3 class="font-headline-sm text-headline-sm">Nikhil David</h3>
 </div>
-<div class="bg-white p-md rounded-2xl shadow-sm border-b-4 border-secondary text-center min-w-[260px] sm:min-w-[280px] snap-start shrink-0">
+<div class="bg-white p-md rounded-2xl shadow-sm border-b-4 border-secondary text-center min-w-[260px] sm:min-w-[280px] shrink-0">
 <div class="w-24 h-24 bg-secondary-fixed mx-auto rounded-full mb-md flex items-center justify-center">
-<span class="material-symbols-outlined text-4xl text-secondary">face_6</span>
+<span class="material-symbols-outlined text-4xl text-secondary">face</span>
 </div>
 <h3 class="font-headline-sm text-headline-sm">Kian David</h3>
 </div>
-<div class="bg-white p-md rounded-2xl shadow-sm border-b-4 border-tertiary text-center min-w-[260px] sm:min-w-[280px] snap-start shrink-0">
+<div class="bg-white p-md rounded-2xl shadow-sm border-b-4 border-tertiary text-center min-w-[260px] sm:min-w-[280px] shrink-0">
 <div class="w-24 h-24 bg-tertiary-fixed mx-auto rounded-full mb-md flex items-center justify-center">
-<span class="material-symbols-outlined text-4xl text-tertiary">face_5</span>
+<span class="material-symbols-outlined text-4xl text-tertiary">face</span>
 </div>
 <h3 class="font-headline-sm text-headline-sm">Arjun Bonam</h3>
 </div>
-<div class="bg-white p-md rounded-2xl shadow-sm border-b-4 border-primary text-center min-w-[260px] sm:min-w-[280px] snap-start shrink-0">
+<div class="bg-white p-md rounded-2xl shadow-sm border-b-4 border-primary text-center min-w-[260px] sm:min-w-[280px] shrink-0">
 <div class="w-24 h-24 bg-primary-fixed mx-auto rounded-full mb-md flex items-center justify-center">
 <span class="material-symbols-outlined text-4xl text-primary">face</span>
 </div>
 <h3 class="font-headline-sm text-headline-sm">Michael Shatkin</h3>
 </div>
-<div class="bg-white p-md rounded-2xl shadow-sm border-b-4 border-secondary text-center min-w-[260px] sm:min-w-[280px] snap-start shrink-0">
+<div class="bg-white p-md rounded-2xl shadow-sm border-b-4 border-secondary text-center min-w-[260px] sm:min-w-[280px] shrink-0">
 <div class="w-24 h-24 bg-secondary-fixed mx-auto rounded-full mb-md flex items-center justify-center">
-<span class="material-symbols-outlined text-4xl text-secondary">face_6</span>
+<span class="material-symbols-outlined text-4xl text-secondary">face</span>
 </div>
 <h3 class="font-headline-sm text-headline-sm">Akhil Potnuri</h3>
 </div>
-<div class="bg-white p-md rounded-2xl shadow-sm border-b-4 border-tertiary text-center min-w-[260px] sm:min-w-[280px] snap-start shrink-0">
+<div class="bg-white p-md rounded-2xl shadow-sm border-b-4 border-tertiary text-center min-w-[260px] sm:min-w-[280px] shrink-0">
 <div class="w-24 h-24 bg-tertiary-fixed mx-auto rounded-full mb-md flex items-center justify-center">
-<span class="material-symbols-outlined text-4xl text-tertiary">face_5</span>
+<span class="material-symbols-outlined text-4xl text-tertiary">face</span>
 </div>
 <h3 class="font-headline-sm text-headline-sm">Ashvath Athiyarath</h3>
 </div>
-<div class="bg-white p-md rounded-2xl shadow-sm border-b-4 border-primary text-center min-w-[260px] sm:min-w-[280px] snap-start shrink-0">
+<div class="bg-white p-md rounded-2xl shadow-sm border-b-4 border-primary text-center min-w-[260px] sm:min-w-[280px] shrink-0">
 <div class="w-24 h-24 bg-primary-fixed mx-auto rounded-full mb-md flex items-center justify-center">
 <span class="material-symbols-outlined text-4xl text-primary">face</span>
 </div>
@@ -500,6 +511,56 @@
                     mobileMenuButton.setAttribute('aria-expanded', 'false');
                 });
             });
+        }
+
+        const teamScroll = document.getElementById('team-scroll');
+
+        if (teamScroll && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            let autoScrollPaused = false;
+            let autoScrollDirection = 1;
+            let userPauseTimeout;
+
+            const pauseAutoScroll = () => {
+                autoScrollPaused = true;
+            };
+
+            const resumeAutoScroll = () => {
+                autoScrollPaused = false;
+            };
+
+            const pauseForInteraction = () => {
+                autoScrollPaused = true;
+                clearTimeout(userPauseTimeout);
+                userPauseTimeout = setTimeout(() => {
+                    autoScrollPaused = false;
+                }, 2200);
+            };
+
+            teamScroll.addEventListener('mouseenter', pauseAutoScroll);
+            teamScroll.addEventListener('mouseleave', resumeAutoScroll);
+            teamScroll.addEventListener('touchstart', pauseForInteraction, { passive: true });
+            teamScroll.addEventListener('pointerdown', pauseForInteraction);
+            teamScroll.addEventListener('wheel', pauseForInteraction, { passive: true });
+
+            const tickTeamScroll = () => {
+                if (!autoScrollPaused) {
+                    const maxScrollLeft = teamScroll.scrollWidth - teamScroll.clientWidth;
+
+                    if (maxScrollLeft > 0) {
+                        if (teamScroll.scrollLeft >= maxScrollLeft - 1) {
+                            autoScrollDirection = -1;
+                        } else if (teamScroll.scrollLeft <= 1) {
+                            autoScrollDirection = 1;
+                        }
+
+                        teamScroll.scrollLeft += autoScrollDirection * 1.1;
+                    }
+                }
+
+                requestAnimationFrame(tickTeamScroll);
+            };
+
+            requestAnimationFrame(tickTeamScroll);
         }
 
         // Interactive Elements: Background Confetti
